@@ -8,6 +8,8 @@ namespace Methods
 {
     class Program
     {
+        static int classVar = 0;
+
         static void Main(string[] args)
         {
             Console.WriteLine($"\n__Vars in methods");
@@ -18,14 +20,31 @@ namespace Methods
             Console.WriteLine($"int a = PlusOne(i) = {a}");
             Console.WriteLine($"i after PlusOne = {i}");
 
-            double num = ReadeDoubleVal("Enter number", 1.0, 5.0);
-            Console.WriteLine($"You entered {num}");
+            Console.WriteLine($"\nUsing func with params by ref\ni = {i}");
+            IncreaseByRef(ref i, 5);
+            Console.WriteLine($"After IncreaseBy(ref i, 5), i = {i}");
 
-            num = ReadeDoubleVal(min: 18, intro: "Enter age", max: 65);
-            Console.WriteLine("Availabel age {0:0.##}", num);
+            Console.WriteLine($"\nUsing func with params by out reference\ni = {i}");
+            ChangeValTo(out i, 5);
+            Console.WriteLine($"After ChangeValTo(out i, 5), i = {i}");
+
+            Console.WriteLine("\n__Using class vars to use in different methods of class\nvar before use = {0}",classVar);
+            classVar = 15;
+            Console.WriteLine($"var after aasign 15: var = {classVar}");
+            ChangeClassVar();
+            Console.WriteLine($"Class var after func = {classVar}");
+
+            //double num = ReadeDoubleVal("Enter number", 1.0, 5.0);
+            //Console.WriteLine($"You entered {num}");
+
+            //num = ReadeDoubleVal(min: 18, intro: "Enter age", max: 65);
+            //Console.WriteLine("Availabel age {0:0.##}", num);
+
+
             Console.ReadKey();
         }
 
+        // Pass parameters as value
         static int PlusOne(int i)
         {
             i = i + 1;
@@ -33,7 +52,26 @@ namespace Methods
             return i;
         }
 
-        static double ReadeDoubleVal(string intro, double min, double max)
+        // Pass parameter as a reference (full control of param var in method)
+        static void IncreaseByRef( ref int num, int incr)
+        {
+            num = num + incr;
+        }
+
+        // Pass parameter as a out reference (allows only val change of var)
+        static void ChangeValTo(out int num, int incr)
+        {
+            num = incr;
+        }
+
+        // Using class vars in method
+        static void ChangeClassVar(){
+            Console.WriteLine($"Class var on func input: {classVar}");
+            classVar = 222;
+            Console.WriteLine($"Class var cahnged in func and = {classVar}");
+        }
+        
+        static double ReadeDoubleVal(string intro = "Enter number", double min=0.0, double max=100.0)
         {
             double res = 0;
             do
