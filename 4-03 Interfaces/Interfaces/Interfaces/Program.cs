@@ -16,7 +16,7 @@ namespace Interfaces
 
     public interface IPrintToPaper
     {
-        void Print()
+        void Print();
     }
 
 
