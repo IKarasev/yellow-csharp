@@ -92,8 +92,8 @@ namespace Inheritance
     {
         static void Main(string[] args)
         {
-            IAccount acc = new CustomerAccount();
-            IAccount bacc = new BabyAccount();
+            IAccount acc = new CustomerAccount("Jon",1000);
+            IAccount bacc = new BabyAccount("Cate", 100);
 
             acc.AddBalance(50);
             bacc.AddBalance(100);
