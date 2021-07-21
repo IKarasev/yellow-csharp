@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hashtables
+namespace Dictionaries
 {
+
     public interface IAccount
     {
         string GetName();
@@ -21,24 +22,31 @@ namespace Hashtables
     }
 
     // Class to store bank accounts
-    public class HashBank : IBank
+    public class DictionaryBank : IBank
     {
-        // instead of array we can use hashtable
-        Hashtable bankHashtable = new Hashtable();
+        // bank stack could be realised with dictionaries
+        Dictionary<string, IAccount> accountDictionary = new Dictionary<string, IAccount>();
 
         // adding account to hashtable with name as key
         public bool StoreAccount(IAccount account)
         {
-            bankHashtable.Add(account.GetName(), account);
+            // before storing account we need to check if it already exist
+            // otherwise run will drop exception
+            if (accountDictionary.ContainsKey(account.GetName()))
+                return false;
+
+            accountDictionary.Add(account.GetName(), account);
             return true;
         }
 
-        // retriving account from hashtable by name (key)
+        // retriving account from dictionary by name (key)
         public IAccount FindAccount(string name)
         {
-            // we need to use as - bankHashtable[name] returns reference to IAccount object
-            // as will return null if non item found or it is not IAccount
-            return bankHashtable[name] as IAccount;
+            // before storing we also need to check if it exists
+            if (accountDictionary.ContainsKey(name))
+                return accountDictionary[name];
+            else
+                return null;
         }
     }
 
@@ -59,7 +67,7 @@ namespace Hashtables
             this.balance = inBalance;
         }
     }
-    
+
     class Program
     {
         static void Main(string[] args)
